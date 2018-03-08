@@ -125,9 +125,7 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(value="/editarArticulo", method = RequestMethod.POST)
-	public String editarArticulo (@RequestParam String nombre, @RequestParam String descripcion,@RequestParam String codigo , @RequestParam int cantidad, Model model,HttpSession sesion){
-		System.out.println("nombre :" + nombre);
-		Articulo art = new Articulo(nombre,descripcion,codigo, cantidad);
+	public String editarArticulo (@ModelAttribute Articulo art){
 		System.out.println("Antes del dao");
 		articuloDAO.ActualizarArticulo(art);
 		return "redirect:/Principal?mensaje="+ "Articulo editado";

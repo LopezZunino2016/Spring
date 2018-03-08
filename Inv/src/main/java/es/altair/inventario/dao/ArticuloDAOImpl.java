@@ -81,13 +81,14 @@ public class ArticuloDAOImpl implements ArticuloDAO {
 		System.out.println("Entramos en el DAO");
 		Session sesion=sessionFactory.getCurrentSession();
 		System.out.println(art.getNombre());
-		sesion.update(art);
-		/*sesion.createQuery("UPDATE Articulo SET nombre=:n,   codigo=:co, cantidad=:ca , descripcion=:d WHERE idArticulos=:i ")
+		System.out.println(art.getIdArticulos());
+/*		sesion.update(art);
+*/		sesion.createSQLQuery("UPDATE articulo SET nombre=:n,   codigo=:co, cantidad=:ca , descripcion=:d WHERE idArticulos=:i ")
 		.setParameter("n", art.getNombre())
 		.setParameter("co", art.getCodigo())
 		.setParameter("ca", art.getCantidad())
 		.setParameter("d", art.getDescripcion())
 		.setParameter("i", art.getIdArticulos())
-		.executeUpdate();*/
+		.executeUpdate();
 	}
 }
