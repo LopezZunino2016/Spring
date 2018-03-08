@@ -1,0 +1,17 @@
+@charset "ISO-8859-1";
+
+body{
+    font-family:arial;
+	color: yellow;
+	background:#8ba987 url('http://i.imgur.com/7Prf6.jpg');	
+	text-aling: center;
+}
+form{
+	color: white; 
+}
+section {
+	float: right;
+		
+	width: 660px
+	margin-right: 30%;
+}
