@@ -1,10 +1,13 @@
 package es.altair.inventario.dao;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import es.altair.inventario.bean.Articulo;
 import es.altair.inventario.bean.Usuario;
 
 
@@ -55,7 +58,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		int filas = 0; 
 		Session sesion=sessionFactory.getCurrentSession();
 		System.out.println(usu);
-		usu.setTipo(1);
+		usu.setTipo(2);
 		filas = sesion.createSQLQuery("INSERT INTO usuarios(nombre, apellidos, alias, password, tipo) values (:n, :a, :al,  AES_ENCRYPT(:p, :passphrase), :t)")
 				.setParameter("n", usu.getNombre())
 				.setParameter("a", usu.getApellidos())
@@ -66,6 +69,28 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				.executeUpdate();
 		
 		return filas;
+	}
+
+	
+	@Transactional
+	@Override
+	public List<Usuario> listar() {
+		Session sesion=sessionFactory.getCurrentSession();
+		List<Usuario> lista = sesion.createQuery("FROM Usuario u ").list(); 
+		 
+		System.out.println("tamaño de lista: " + lista.size());
+		
+		return lista;
+	}
+
+	
+	@Transactional
+	@Override
+	public void borrar(int idUsuBorrar) {
+		Session sesion=sessionFactory.getCurrentSession();
+		sesion.createQuery("DELETE FROM Usuario WHERE idUsuario=:i")
+							.setParameter("i", idUsuBorrar)
+							.executeUpdate();
 	}
 	
 	

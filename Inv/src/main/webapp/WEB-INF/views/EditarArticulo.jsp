@@ -41,7 +41,8 @@
 		action="${editarA }" id="formularioInicio" commandName="articulo">
 		<f:input style="display: none;" path="idArticulos" type="number" name="idArticulos"  required="required"
 												class="form-control" 
-												placeholder="Nombre"/>		<div class="form-group">
+												placeholder="Nombre"/>
+		<div class="form-group">
 			<f:label path="nombre">Nombre:</f:label>
 			<f:input type="text" placeholder="Nombre Articulo"
 				class="form-control" path="nombre" name="nombre" id="nombre" required="required"/>

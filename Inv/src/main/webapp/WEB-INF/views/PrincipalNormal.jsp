@@ -40,11 +40,12 @@
 			<div class="alert alert-warning alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert"
 							aria-hidden="true">x</button>
-					<strong>Info!</strong> ${mensaje }
+					<strong>Info!</strong> ${mensaje}
 			</div>	
 		</c:if>
 		<h1>Articulos</h1>
 		<hr>
+		
 		<div class="row">
 		
 			<c:forEach items="${listaArticulo}" var="l">
@@ -56,9 +57,6 @@
 					<a href="<c:url value="/EditarArticulo?idArticulo=${l.idArticulos }"/>"><button
 	          				type="button" class="btn btn-primary">Editar Articulo</button>
 	          		</a>
-	          		
-	          		<!--  Prueba Boton Modal -->
-	          		
 	          		<button type="button" class="btn btn-primary" data-toggle="modal" 
 	          			data-target="#borrarArticulo${l.idArticulos}">
 							<i class="fa fa-times" aria-hidden="true"></i>Borrar
@@ -84,50 +82,11 @@
 								</div>
 							</div>
 					</div>
-	          	</div>
-			</c:forEach>
-			<hr>
-		</div>
-		<br>
-		<h1>Usuarios</h1>
-		<hr>
-		
-		<div class="row">
-			<c:forEach items="${listaUsuario}" var="u">
-				
-				<div class="col-md-3">
-					<h3>nombre: ${u.nombre }</h3>
-					<p>Apellidos: ${u.apellidos }</p>
-					<p>Login: ${u.alias }</p>
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#borrarUsuario${u.idUsuario}">
-							<i class="fa fa-times" aria-hidden="true"></i>Borrar
-					</button> 
-					<div class="modal fade" id="borrarUsuario${u.idUsuario}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">Borrar
-											Usuario</h5>
-									</div>
-									<div class="modal-body">
-										¿Desea eliminar el usuario ${u.nombre } ${u.apellidos }?
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary"
-											data-dismiss="modal">No</button>
-										<button type="button" class="btn btn-primary" onclick="location.href='<c:url value="/BorrarUsuario?idUsuario=${u.idUsuario}"/>'">Sí</button>
-	
-									</div>
-								</div>
-							</div>
-					</div>
-					
+	          		<hr>
 				</div>
-				
 			</c:forEach>
-			<hr>
+		
 		</div>
-		<br>
 		<footer class="py-5 bg-dark">
 			<div class="container">
 				<p class="m-0 text-center text-white">Copyright &copy; Jose Mª

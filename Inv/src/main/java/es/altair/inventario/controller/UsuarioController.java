@@ -39,7 +39,7 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(value="/Registrar", method=RequestMethod.POST)
-	public String registrarUsuario(@ModelAttribute Usuario Usu) {
+	public String registrarUsuario(@RequestParam("idUsuario") String idUsuario, @ModelAttribute Usuario Usu) {
 		
 		int filas = 0; 
 		String mensaje = ""; 
@@ -60,10 +60,18 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(value="/Principal", method=RequestMethod.GET)
-	public ModelAndView principal(Model model,HttpSession sesion) {
+	public ModelAndView principal(@ModelAttribute Usuario usu, Model model,HttpSession sesion) {
+		model.addAttribute("listaArticulo",articuloDAO.listar());	
+		model.addAttribute("listaUsuario", usuarioDAO.listar()); 
+		model.addAttribute("idUsuario", usu.getNombre()); 
+		return new ModelAndView("Principal");
+
+	}
+	@RequestMapping(value="/PrincipalNormal", method=RequestMethod.GET)
+	public ModelAndView principalUsuario(Model model,HttpSession sesion) {
 		model.addAttribute("listaArticulo",articuloDAO.listar());	
 
-		return new ModelAndView("Principal");
+		return new ModelAndView("PrincipalNormal");
 
 	}
 	@RequestMapping(value="/inicioSesion",method=RequestMethod.POST)
@@ -72,9 +80,20 @@ public class UsuarioController {
 		System.out.println(usu);
 		if(usu != null) {
 			sesion.setAttribute("usuarioLogeado", usu);
-			return "redirect:/Principal"; 
-		}else
-		return "redirect:/?fallo=Usuario y/o Password Incorrecto";
+			sesion.setAttribute("tipoUsuario", usu.getTipo());
+			sesion.setAttribute("idUsuario", usu.getIdUsuario());
+
+			if(usu.getTipo() == 1) 
+				return "redirect:/Principal";
+			else 				
+				return "redirect:/PrincipalNormal";
+			
+		}else {
+			String mensaje="Usuario y/o Password Incorrecto"; 
+
+			return "redirect:/?mensajeL=" + mensaje;
+		}
+		
 
 	}
 	
@@ -86,14 +105,22 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(value="/AnadirA", method=RequestMethod.POST)
-	public String anadirArticulo(@ModelAttribute Articulo art) {
+	public String anadirArticulo(@ModelAttribute Usuario usu,HttpSession sesion, @ModelAttribute Articulo art) {
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario"); 
+		
 		int filas = 0; 
 		String mensaje = "";
 		if(!articuloDAO.comprobarNombre(art.getNombre())) {
 			filas = articuloDAO.anadirArticulo(art);
 			if(filas == 1) {
-				mensaje="Articulo Registrado"; 
-				return "redirect:/Principal?mensaje="+ "Articulo Registrado";
+				if(tipo == 1) {
+					mensaje="Articulo Registrado"; 
+					return "redirect:/Principal?mensaje="+ "Articulo Registrado";
+				}else {
+					mensaje="Articulo Registrado"; 
+					return "redirect:/PrincipalNormal?mensaje="+ "Articulo Registrado";
+				}
+				
 			}else {
 				mensaje="No se ha guardado el articulo"; 
 				return "redirect:/addArticulo?mensaje="+ mensaje; 
@@ -107,14 +134,35 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(value ="/BorrarArticulo", method = RequestMethod.GET)
-	public String eliminaArticulo(@RequestParam("idArticulo") String idArticulo,HttpServletRequest request) {
-		System.out.println("Entra en el borrar");
+	public String eliminaArticulo(@ModelAttribute Usuario usu,HttpSession sesion,@RequestParam("idArticulo") String idArticulo,HttpServletRequest request) {
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario"); 
+
 		int idArt = Integer.parseInt(request.getParameter("idArticulo"));
-		System.out.println("ID SELECCIONADO PARA BORRAR: " + idArt);
 		articuloDAO.borrar(idArt);
-		return "redirect:/Principal?mensaje="+ "Articulo borrado";
+		if(tipo == 1)
+			return "redirect:/Principal?mensaje="+ "Articulo borrado";
+		else
+			return "redirect:/PrincipalNormal?mensaje="+ "Articulo borrado";
 	}
 	
+	@RequestMapping(value ="/BorrarUsuario", method = RequestMethod.GET)
+	public String eliminarUsuario(@ModelAttribute Usuario usu,HttpSession sesion,@RequestParam("idUsuario") String idArticulo,HttpServletRequest request) {
+		int idUsuBorrar = Integer.parseInt(request.getParameter("idUsuario")); 
+		int idUsu = (Integer) sesion.getAttribute("idUsuario"); 
+		System.out.println("USUARIO MIO: " + idUsu + " USUARIO BORRAR: "+ idUsuBorrar );
+		if(idUsu == idUsuBorrar ) {
+			return "redirect:/Principal?mensaje="+ "No puedes borrar tu usuario";
+
+		}else {
+			System.out.println("Entramos en borrar");
+			usuarioDAO.borrar(idUsuBorrar);
+			return "redirect:/Principal?mensaje="+ "Usuario Borrado";
+
+		}
+			
+			
+		
+	}
 	@RequestMapping(value="/EditarArticulo",method=RequestMethod.GET)
 	public ModelAndView modelEditarVid(@RequestParam("idArticulo") String idArticulo,HttpServletRequest request) {
 		int id=Integer.parseInt(request.getParameter("idArticulo"));		
@@ -129,5 +177,11 @@ public class UsuarioController {
 		System.out.println("Antes del dao");
 		articuloDAO.ActualizarArticulo(art);
 		return "redirect:/Principal?mensaje="+ "Articulo editado";
+	}
+	
+	@RequestMapping(value="/cerrarSesion",method=RequestMethod.GET)
+	public String cerrarSesion(HttpSession sesion) {
+		sesion.setAttribute("usuLogeado", null);
+		return "redirect:/"; 
 	}
 }
