@@ -21,6 +21,10 @@
 	          	type="button" class="btn btn-primary btn-lg">Añadir Articulo</button>
 	         </a>
 	         <li class="divider"></li>
+	         <a href="<c:url value="/EditUser"/>"><button
+	          	type="button" class="btn btn-primary btn-lg">Mi usuario</button>
+	         </a>
+	         <li class="divider"></li>
 	         <a href="<c:url value="/cerrarSesion"/>"><button
 	          	type="button" class="btn btn-danger btn-lg">Cerrar Sesion</button></a>
 	         

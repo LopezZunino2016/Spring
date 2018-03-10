@@ -11,4 +11,6 @@ public interface UsuarioDAO {
 	int registrar(Usuario usu);
 	List<Usuario> listar();
 	void borrar(int idUsuBorrar);
+	Usuario obtenerUsuarioPorId(int idUsu);
+	void actualizarUsuario(Usuario usu);
 }

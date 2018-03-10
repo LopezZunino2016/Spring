@@ -28,21 +28,21 @@
 		<br>
 		<br>
 		<!-- Prueba columnas -->
-	
+		<c:if test="${mensaje != ''}">
+			    	<div class="alert alert-warning alert-dismissable">
+			     		<button type="button" class="close" data-dismiss="alert"
+			      		aria-hidden="true">x</button>
+			     		<strong>Info!</strong> ${mensaje}
+			    	</div>
+			  	 </c:if>
 		<div class="row">
 			<div class="col-xs-6 col-md-4">
 				<h1>Iniciar Sesion</h1>
 				<br>	
-				<c:if test="${mensajeL != ''}">
-			    	<div class="alert alert-warning alert-dismissable">
-			     		<button type="button" class="close" data-dismiss="alert"
-			      		aria-hidden="true">x</button>
-			     		<strong>Info!</strong> ${mensajeL}
-			    	</div>
-			  	 </c:if>
+				
 			
 				<c:url value="/inicioSesion" var="iniciarSesion"></c:url>
-				<f:form class="navbar-form navbar-right form-inline" method="POST"
+				<f:form class="navbar-form navbar-right" method="POST"
 					action="${iniciarSesion }" id="formularioInicio" commandName="usuario">
 					<div class="form-group">
 						<f:label path="alias">Usuario: </f:label>
@@ -50,7 +50,6 @@
 						<f:input type="text" placeholder="Nombre Usuario"
 							class="form-control" path="alias" name="alias" id="alias" required="required"/>
 					</div>
-					<br>
 					<div class="form-group">
 						<f:label path="password">Password:</f:label>
 						<f:input type="password" path="password" name="password" id="password"
@@ -63,13 +62,7 @@
 			</div>
 	  		<div class="col-xs-12 col-md-8">
 	  			<h1>Registrar</h1>
-				<c:if test="${mensaje != ''}">
-			    	<div class="alert alert-warning alert-dismissable">
-			     		<button type="button" class="close" data-dismiss="alert"
-			      		aria-hidden="true">x</button>
-			     		<strong>Info!</strong> ${mensaje}
-			    	</div>
-			  	 </c:if>
+				
 				<br>
 				<c:url value="/Registrar" var="registrar"></c:url>
 				<f:form class="navbar-form navbar-right " method="POST"

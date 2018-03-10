@@ -65,7 +65,7 @@
 		<button type="submit" class="btn btn-primary">
 			<i class="fa fa-sign-in"></i>Enviar
 		</button>
-		<a href="<c:url value="/Principal"/>"><button
+		<a href="<c:url value="/Volver"/>"><button
           	type="button" class="btn btn-primary">Cancelar</button>
          </a>
 	</f:form>

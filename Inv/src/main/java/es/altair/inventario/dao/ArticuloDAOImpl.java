@@ -58,6 +58,7 @@ public class ArticuloDAOImpl implements ArticuloDAO {
 		System.out.println(lista.size());
 		return lista;
 	}
+	
 	@Transactional
 	@Override
 	public Articulo obtenerArticuloPorId(int id) {
@@ -65,6 +66,7 @@ public class ArticuloDAOImpl implements ArticuloDAO {
 		
 		return (Articulo)sesion.get(Articulo.class, id);
 	}
+	
 	@Transactional
 	@Override
 	public void borrar(int idArticulo) {

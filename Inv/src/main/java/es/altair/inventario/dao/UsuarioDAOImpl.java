@@ -43,12 +43,16 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		boolean correcto = false; 
 		
 		Session sesion=sessionFactory.getCurrentSession();
-		
-		if ((Usuario) sesion.createQuery("From Usuario Where alias=:a")
-					.setParameter("a", usu.getAlias())
-					.uniqueResult() != null)
+		System.out.println(usu.getAlias());
+		Usuario u =(Usuario) sesion.createQuery("FROM Usuario WHERE alias=:a")
+				.setParameter("a", usu.getAlias())
+				.uniqueResult();
+		if(u !=  null)
+			correcto = true;
+		else 
 			correcto = false;
 		
+		System.out.println(correcto);
 		return correcto;
 	}
 	
@@ -71,7 +75,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		return filas;
 	}
 
-	
 	@Transactional
 	@Override
 	public List<Usuario> listar() {
@@ -83,7 +86,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		return lista;
 	}
 
-	
 	@Transactional
 	@Override
 	public void borrar(int idUsuBorrar) {
@@ -91,6 +93,27 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		sesion.createQuery("DELETE FROM Usuario WHERE idUsuario=:i")
 							.setParameter("i", idUsuBorrar)
 							.executeUpdate();
+	}
+	
+	@Transactional
+	@Override
+	public Usuario obtenerUsuarioPorId(int idUsu) {
+		Session sesion=sessionFactory.getCurrentSession();
+
+		return (Usuario)sesion.get(Usuario.class, idUsu);
+	}
+
+	@Transactional
+	@Override
+	public void actualizarUsuario(Usuario usu) {
+		Session sesion=sessionFactory.getCurrentSession();
+		
+		sesion.createQuery("UPDATE Usuario SET nombre=:n, apellidos=:a, alias=:al WHERE idUsuario=:i")
+				.setParameter("n", usu.getNombre())
+				.setParameter("a", usu.getApellidos())
+				.setParameter("al", usu.getAlias())
+				.setParameter("i", usu.getIdUsuario())
+				.executeUpdate();
 	}
 	
 	

@@ -21,8 +21,13 @@
 	          	type="button" class="btn btn-primary btn-lg">Añadir Articulo</button>
 	         </a>
 	         <li class="divider"></li>
+	         <a href="<c:url value="/EditUser"/>"><button
+	          	type="button" class="btn btn-primary btn-lg">Mi usuario</button>
+	         </a>
+	         <li class="divider"></li>
+	         
 	         <a href="<c:url value="/cerrarSesion"/>"><button
-	          	type="button" class="btn btn-danger btn-lg">Cerrar Sesion</button></a>
+	          	type="button" class="btn btn-danger btn-lg">Volver </button></a>
 	         
 	         
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -37,12 +42,12 @@
 		
 			
 		<c:if test="${mensaje != ''}">
-			<div class="alert alert-warning alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert"
-							aria-hidden="true">x</button>
-					<strong>Info!</strong> ${mensaje }
-			</div>	
-		</c:if>
+			    	<div class="alert alert-warning alert-dismissable">
+			     		<button type="button" class="close" data-dismiss="alert"
+			      		aria-hidden="true">x</button>
+			     		<strong>Info!</strong> ${mensaje}
+			    	</div>
+			  	 </c:if>
 		<h1>Articulos</h1>
 		<hr>
 		<div class="row">
@@ -59,7 +64,7 @@
 	          		
 	          		<!--  Prueba Boton Modal -->
 	          		
-	          		<button type="button" class="btn btn-primary" data-toggle="modal" 
+	          		<button type="button" class="btn btn-danger" data-toggle="modal" 
 	          			data-target="#borrarArticulo${l.idArticulos}">
 							<i class="fa fa-times" aria-hidden="true"></i>Borrar
 					</button> 
@@ -78,7 +83,7 @@
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary"
 											data-dismiss="modal">No</button>
-										<button type="button" class="btn btn-primary" onclick="location.href='<c:url value="/BorrarArticulo?idArticulo=${l.idArticulos }"/>'">Sí</button>
+										<button type="button" class="btn btn-danger" onclick="location.href='<c:url value="/BorrarArticulo?idArticulo=${l.idArticulos }"/>'">Sí</button>
 	
 									</div>
 								</div>
@@ -99,7 +104,7 @@
 					<h3>nombre: ${u.nombre }</h3>
 					<p>Apellidos: ${u.apellidos }</p>
 					<p>Login: ${u.alias }</p>
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#borrarUsuario${u.idUsuario}">
+					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#borrarUsuario${u.idUsuario}">
 							<i class="fa fa-times" aria-hidden="true"></i>Borrar
 					</button> 
 					<div class="modal fade" id="borrarUsuario${u.idUsuario}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -115,7 +120,7 @@
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary"
 											data-dismiss="modal">No</button>
-										<button type="button" class="btn btn-primary" onclick="location.href='<c:url value="/BorrarUsuario?idUsuario=${u.idUsuario}"/>'">Sí</button>
+										<button type="button" class="btn btn-danger" onclick="location.href='<c:url value="/BorrarUsuario?idUsuario=${u.idUsuario}"/>'">Sí</button>
 	
 									</div>
 								</div>

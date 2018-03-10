@@ -39,11 +39,11 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(value="/Registrar", method=RequestMethod.POST)
-	public String registrarUsuario(@RequestParam("idUsuario") String idUsuario, @ModelAttribute Usuario Usu) {
+	public String registrarUsuario(@ModelAttribute Usuario Usu) {
 		
 		int filas = 0; 
 		String mensaje = ""; 
-		
+		System.out.println(Usu.getAlias());
 		if(!usuarioDAO.comprobarAlias(Usu)) {
 			filas = usuarioDAO.registrar(Usu);
 			if(filas == 1) {
@@ -64,9 +64,11 @@ public class UsuarioController {
 		model.addAttribute("listaArticulo",articuloDAO.listar());	
 		model.addAttribute("listaUsuario", usuarioDAO.listar()); 
 		model.addAttribute("idUsuario", usu.getNombre()); 
+
 		return new ModelAndView("Principal");
 
 	}
+	
 	@RequestMapping(value="/PrincipalNormal", method=RequestMethod.GET)
 	public ModelAndView principalUsuario(Model model,HttpSession sesion) {
 		model.addAttribute("listaArticulo",articuloDAO.listar());	
@@ -74,6 +76,16 @@ public class UsuarioController {
 		return new ModelAndView("PrincipalNormal");
 
 	}
+
+	@RequestMapping(value="/EditUser", method=RequestMethod.GET)
+	public ModelAndView editarMiUsuario(Model mode, HttpSession sesion) {
+		
+		int idUsu = (Integer) sesion.getAttribute("idUsuario"); 
+
+		Usuario usu = usuarioDAO.obtenerUsuarioPorId(idUsu); 
+		return new ModelAndView("EditarUsuario", "usuario", usu); 
+	}
+	
 	@RequestMapping(value="/inicioSesion",method=RequestMethod.POST)
 	public String iniciarSesion(@ModelAttribute Usuario usu,HttpSession sesion) {
 		usu = usuarioDAO.comprobarUsuario(usu.getAlias(), usu.getPassword());
@@ -90,8 +102,8 @@ public class UsuarioController {
 			
 		}else {
 			String mensaje="Usuario y/o Password Incorrecto"; 
-
-			return "redirect:/?mensajeL=" + mensaje;
+			
+			return "redirect:/?mensaje=" + mensaje;
 		}
 		
 
@@ -163,8 +175,9 @@ public class UsuarioController {
 			
 		
 	}
+	
 	@RequestMapping(value="/EditarArticulo",method=RequestMethod.GET)
-	public ModelAndView modelEditarVid(@RequestParam("idArticulo") String idArticulo,HttpServletRequest request) {
+	public ModelAndView modelEditarArticulo(@RequestParam("idArticulo") String idArticulo,HttpServletRequest request) {
 		int id=Integer.parseInt(request.getParameter("idArticulo"));		
 		
 		Articulo art = articuloDAO.obtenerArticuloPorId(id);
@@ -173,15 +186,41 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(value="/editarArticulo", method = RequestMethod.POST)
-	public String editarArticulo (@ModelAttribute Articulo art){
-		System.out.println("Antes del dao");
+	public String editarArticulo (@ModelAttribute Articulo art, HttpSession sesion){
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario"); 
 		articuloDAO.ActualizarArticulo(art);
-		return "redirect:/Principal?mensaje="+ "Articulo editado";
+		if(tipo == 1)
+			return "redirect:/Principal?mensaje="+ "Articulo editado";
+		else
+			return "redirect:/PrincipalNormal?mensaje="+ "Articulo editado";
+	}
+	
+	@RequestMapping(value="/EditarUsuario", method= RequestMethod.POST)
+	public String editarUsuario(@ModelAttribute Usuario usu, HttpSession sesion) {
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario"); 
+		
+		usuarioDAO.actualizarUsuario(usu);
+		
+		if(tipo == 1)
+			return "redirect:/Principal?mensaje="+ "Usuario editado";
+		else
+			return "redirect:/PrincipalNormal?mensaje="+ "Usuario editado";
 	}
 	
 	@RequestMapping(value="/cerrarSesion",method=RequestMethod.GET)
 	public String cerrarSesion(HttpSession sesion) {
 		sesion.setAttribute("usuLogeado", null);
 		return "redirect:/"; 
+	}
+	
+	@RequestMapping(value="/Volver", method=RequestMethod.GET)
+	public String Volver(HttpSession sesion) {
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario"); 
+		
+		if(tipo == 1)
+			return "redirect:/Principal?mensaje="+ "Articulo borrado";
+		else
+			return "redirect:/PrincipalNormal?mensaje="+ "Articulo borrado";
+		
 	}
 }
