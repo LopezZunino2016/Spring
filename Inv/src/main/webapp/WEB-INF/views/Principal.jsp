@@ -18,16 +18,18 @@
 			<a class="navbar-brand" href=""><i class="fa fa-home"
 				aria-hidden="true"></i>Inventario</a>
 			<a href="<c:url value="/addArticulo"/>"><button
-	          	type="button" class="btn btn-primary btn-lg">Añadir Articulo</button>
+	          	type="button" class="btn btn-primary btn-lg">
+	          	<i class="fa fa-plus-square" aria-hidden="true"></i> Añadir Articulo</button>
 	         </a>
 	         <li class="divider"></li>
 	         <a href="<c:url value="/EditUser"/>"><button
-	          	type="button" class="btn btn-primary btn-lg">Mi usuario</button>
+	          	type="button" class="btn btn-primary btn-lg">
+	          	<i class="fa fa-user-circle-o" aria-hidden="true"></i> Mi usuario</button>
 	         </a>
 	         <li class="divider"></li>
 	         
 	         <a href="<c:url value="/cerrarSesion"/>"><button
-	          	type="button" class="btn btn-danger btn-lg">Volver </button></a>
+	          	type="button" class="btn btn-danger btn-lg">Cerrar Sesion </button></a>
 	         
 	         
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -59,7 +61,7 @@
 					<p>Codigo: ${l.codigo}</p>
 					<p>Cantidad: ${l.cantidad}</p>
 					<a href="<c:url value="/EditarArticulo?idArticulo=${l.idArticulos }"/>"><button
-	          				type="button" class="btn btn-primary">Editar Articulo</button>
+	          				type="button" class="btn btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar Articulo</button>
 	          		</a>
 	          		
 	          		<!--  Prueba Boton Modal -->
