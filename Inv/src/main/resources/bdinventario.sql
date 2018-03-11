@@ -1,6 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `bdinventario` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `bdinventario`;
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bdinventario
 -- ------------------------------------------------------
@@ -29,9 +29,9 @@ CREATE TABLE `articulo` (
   `nombre` varchar(45) NOT NULL,
   `codigo` varchar(45) NOT NULL,
   `cantidad` varchar(45) NOT NULL,
-  `descripcion` varchar(45) NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
   PRIMARY KEY (`idArticulos`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,8 +40,39 @@ CREATE TABLE `articulo` (
 
 LOCK TABLES `articulo` WRITE;
 /*!40000 ALTER TABLE `articulo` DISABLE KEYS */;
-INSERT INTO `articulo` VALUES (1,'54','54','54','54');
+INSERT INTO `articulo` VALUES (18,'Placa Base MSI Z270 GAMING','132','123','Microprocesador con tecnología Kaby Lake, color plata'),(20,'Gigabyte GA-H110M-S2H','FBA_E081911','50','(LGA 1151, DDR4 x 2, 2133 MHz, VGA, HDMI, DVI, Mini-STX), color negro');
 /*!40000 ALTER TABLE `articulo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `compra`
+--
+
+DROP TABLE IF EXISTS `compra`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `compra` (
+  `idcompra` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` datetime NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `idArticulos` int(11) NOT NULL,
+  PRIMARY KEY (`idcompra`),
+  KEY `fk_usuario_Compras_idx` (`idUsuario`),
+  KEY `fk_articulo_compras_idx` (`idArticulos`),
+  CONSTRAINT `fk_articulo_compras` FOREIGN KEY (`idArticulos`) REFERENCES `articulo` (`idArticulos`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_usuario_Compras` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `compra`
+--
+
+LOCK TABLES `compra` WRITE;
+/*!40000 ALTER TABLE `compra` DISABLE KEYS */;
+INSERT INTO `compra` VALUES (1,'2018-03-11 00:00:00',1,3,18),(2,'2018-03-11 00:00:00',1,10,20),(21,'2018-03-11 23:47:30',1,3,20);
+/*!40000 ALTER TABLE `compra` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -59,7 +90,7 @@ CREATE TABLE `usuarios` (
   `password` varchar(45) CHARACTER SET keybcs2 NOT NULL,
   `tipo` int(11) NOT NULL,
   PRIMARY KEY (`idUsuario`,`password`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +99,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'admin','admin','admin','╞∞`\'┤3Úq*╕╬Ž!ßσ',1);
+INSERT INTO `usuarios` VALUES (1,'admin','admin','admin','╞∞`\'┤3Úq*╕╬Ž!ßσ',1),(3,'Usuario','Normal','usu','č≥∞ď╥╔Σ╢ň[G╒«@\Z',2),(10,'usuario2','usuario2','usu2','ZuJt\rô■}╦φT*8δµ',2);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -81,4 +112,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-08  6:16:47
+-- Dump completed on 2018-03-12  0:00:19
