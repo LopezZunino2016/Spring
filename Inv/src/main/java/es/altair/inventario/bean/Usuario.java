@@ -24,7 +24,8 @@ public class Usuario implements Serializable{
 	private String password;
 	private int tipo;
 	
-
+	@OneToMany(mappedBy="usuario")
+	private Set<Compra> compra = new HashSet<Compra>();
 	
 	public Usuario() {
 		super();

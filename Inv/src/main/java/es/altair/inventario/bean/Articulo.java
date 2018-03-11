@@ -22,6 +22,10 @@ public class Articulo implements Serializable {
 	private String descripcion; 
 	private String codigo;
 	private int cantidad; 
+	
+	@OneToMany(mappedBy="articulo")
+	private Set<Compra> compra = new HashSet<Compra>();
+	
 	public Articulo() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -1,7 +1,9 @@
 package es.altair.inventario.controller;
 
 import java.io.Console;
+import java.util.Date;
 
+import javax.print.attribute.standard.DateTimeAtCompleted;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.altair.inventario.bean.Articulo;
+import es.altair.inventario.bean.Compra;
 import es.altair.inventario.bean.Usuario;
 import es.altair.inventario.dao.ArticuloDAO;
+import es.altair.inventario.dao.CompraDAO;
 import es.altair.inventario.dao.UsuarioDAO;
 
 @Controller
@@ -29,6 +33,9 @@ public class UsuarioController {
 	
 	@Autowired
 	private ArticuloDAO articuloDAO; 
+	
+	@Autowired
+	private CompraDAO compraDAO; 
 	
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public ModelAndView inicio(@RequestParam(value="fallo",required=false,defaultValue="") String fallo,@RequestParam(value="mensaje",required=false,defaultValue="") String mensaje,Model model) {
@@ -66,7 +73,14 @@ public class UsuarioController {
 		model.addAttribute("idUsuario", usu.getNombre()); 
 
 		return new ModelAndView("Principal");
+	}
 
+	@RequestMapping(value="/VerCompra", method=RequestMethod.GET)
+	public ModelAndView misCompras(Model model,HttpSession sesion) {
+		int idUsu = (Integer) sesion.getAttribute("idUsuario"); 
+		Usuario usu = usuarioDAO.obtenerUsuarioPorId(idUsu); 
+		model.addAttribute("listaCompra", compraDAO.listar(usu));
+		return new ModelAndView("MisCompras");
 	}
 	
 	@RequestMapping(value="/PrincipalNormal", method=RequestMethod.GET)
@@ -139,10 +153,8 @@ public class UsuarioController {
 			}
 		}else {
 			mensaje="el articulo ya se encuentra registradro"; 
-			return "redirect:/addArticulo?mensaje="+ mensaje; 
+			return "redirect:/addArticulo?mensaje="+ mensaje ; 
 		}
-		
-		
 	}
 	
 	@RequestMapping(value ="/BorrarArticulo", method = RequestMethod.GET)
@@ -155,6 +167,42 @@ public class UsuarioController {
 			return "redirect:/Principal?mensaje="+ "Articulo borrado";
 		else
 			return "redirect:/PrincipalNormal?mensaje="+ "Articulo borrado";
+	}
+	
+	@RequestMapping(value ="/borrarCompra", method = RequestMethod.GET)
+	public String eliminaCompra(@ModelAttribute Usuario usu,HttpSession sesion,@RequestParam("idCompra") String idArticulo,HttpServletRequest request) {
+		int id = Integer.parseInt(request.getParameter("idCompra"));
+		System.out.println(id);
+		
+		compraDAO.borrar(id); 
+		return "redirect:/MisCompras?mensaje=" + "Compra cancelada" ; 
+	}
+	
+	@RequestMapping(value="/AddCompra", method=RequestMethod.GET)
+	public String comprarArticulo(HttpSession sesion, @RequestParam("idArticulo") String idArticulo, HttpServletRequest request) {
+		System.out.println("entra en el metodo");
+		
+		System.out.println("USuario: "+ sesion.getAttribute("idUsuario"));
+		int id = (Integer) sesion.getAttribute("idUsuario"); 
+		System.out.println(id);
+		Usuario usu = usuarioDAO.obtenerUsuarioPorId(id);
+		
+		int idArt = Integer.parseInt(request.getParameter("idArticulo"));
+		Articulo art = articuloDAO.obtenerArticuloPorId(idArt); 
+		
+		Date fecha = new Date();
+		System.out.println(fecha);
+		Compra c = new Compra(fecha, 1 , usu, art);
+		int filas = 0; 
+		filas = compraDAO.anadirCompra(c);
+		
+		if(filas == 1) {
+			return "redirect:/PrincipalNormal?mensaje="+ "Compra Realizada";
+			
+		}else {
+			return "redirect:/PrincipalNormal?mensaje="+ "No se ha podido efectuar la compra";
+		}
+		
 	}
 	
 	@RequestMapping(value ="/BorrarUsuario", method = RequestMethod.GET)

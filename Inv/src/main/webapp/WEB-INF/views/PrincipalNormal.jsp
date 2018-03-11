@@ -17,16 +17,21 @@
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 			<a class="navbar-brand" href=""><i class="fa fa-home"
 				aria-hidden="true"></i>Inventario</a>
-			<a href="<c:url value="/addArticulo"/>"><button
-	          	type="button" class="btn btn-primary btn-lg">Añadir Articulo</button>
-	         </a>
+			
 	         <li class="divider"></li>
 	         <a href="<c:url value="/EditUser"/>"><button
-	          	type="button" class="btn btn-primary btn-lg">Mi usuario</button>
+	          	type="button" class="btn btn-primary btn-lg">
+	          	<i class="fa fa-user-circle-o" aria-hidden="true"></i> Mi usuario</button>
+	         </a>
+	         <li class="divider"></li>
+	         <a href="<c:url value="/VerCompra"/>"><button
+	          	type="button" class="btn btn-primary btn-lg">
+	          	<i class="fa fa-user-circle-o" aria-hidden="true"></i> Mis Compras</button>
 	         </a>
 	         <li class="divider"></li>
 	         <a href="<c:url value="/cerrarSesion"/>"><button
-	          	type="button" class="btn btn-danger btn-lg">Cerrar Sesion</button></a>
+	          	type="button" class="btn btn-danger btn-lg">
+	          	<i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesion</button></a>
 	         
 	         
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -58,21 +63,18 @@
 					<p>Descripcion: ${l.descripcion}</p>
 					<p>Codigo: ${l.codigo}</p>
 					<p>Cantidad: ${l.cantidad}</p>
-					<a href="<c:url value="/EditarArticulo?idArticulo=${l.idArticulos }"/>"><button
-	          				type="button" class="btn btn-primary">Editar Articulo</button>
-	          		</a>
+					
 	          		<button type="button" class="btn btn-primary" data-toggle="modal" 
-	          			data-target="#borrarArticulo${l.idArticulos}">
-							<i class="fa fa-times" aria-hidden="true"></i>Borrar
+	          			data-target="#comprarArticulo${l.idArticulos}">
+							<i class="fa fa-cart-plus" aria-hidden="true"></i> Comprar
 					</button> 
-	          		<div class="modal fade" id="borrarArticulo${l.idArticulos}"
+	          		<div class="modal fade" id="comprarArticulo${l.idArticulos}"
 							tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 							aria-hidden="true">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">Borrar
-											Articulo</h5>
+										<h5 class="modal-title" id="exampleModalLabel">Comprar Articulo</h5>
 									</div>
 									<div class="modal-body">
 										¿Desea eliminar el articulo ${l.nombre } ?
@@ -80,7 +82,7 @@
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary"
 											data-dismiss="modal">No</button>
-										<button type="button" class="btn btn-primary" onclick="location.href='<c:url value="/BorrarArticulo?idArticulo=${l.idArticulos }"/>'">Sí</button>
+										<button type="button" class="btn btn-primary" onclick="location.href='<c:url value="/AddCompra?idArticulo=${l.idArticulos }"/>'"><i class="fa fa-cart-plus" aria-hidden="true"></i> Sí</button>
 	
 									</div>
 								</div>

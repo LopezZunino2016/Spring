@@ -4,7 +4,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>Login</title>
+	<title>Mi Usuario</title>
 	<link rel="stylesheet" href='<c:url value="/resources/css/bootstrap.min.css"/>'>
 	<link rel="stylesheet" href='<c:url value="/resources/fonts/font-awesome.min.css"/>'>
 	<link rel="stylesheet" href='<c:url value="/resources/css/Prueba.css"/>'>
@@ -20,7 +20,8 @@
 				aria-hidden="true"></i>Inventario</a>
 			<a class="divider"></a>
 			<a href="<c:url value="/Volver"/>"><button
-	          	type="button" class="btn btn-danger btn-lg"> </li>Volver </button></a>
+	          	type="button" class="btn btn-danger btn-lg">
+	          	<i class="fa fa-reply-all" aria-hidden="true"></i> Volver </button></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarExample" aria-controls="navbarExample"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -65,10 +66,10 @@
 					</div>
 					
 					<button type="submit" class="btn btn-primary">
-						<i class="fa fa-sign-in"></i>Editar
+						<i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar
 					</button>
 					<a href="<c:url value="/Volver"/>"><button
-	          	type="button" class="btn btn-danger">Cancelar </button></a>
+	          		type="button" class="btn btn-danger">Cancelar </button></a>
 				</f:form>
 	  		</div>
   		</div>

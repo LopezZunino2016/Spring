@@ -29,7 +29,8 @@
 	         <li class="divider"></li>
 	         
 	         <a href="<c:url value="/cerrarSesion"/>"><button
-	          	type="button" class="btn btn-danger btn-lg">Cerrar Sesion </button></a>
+	          	type="button" class="btn btn-danger btn-lg">
+	          	<i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesion </button></a>
 	         
 	         
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -61,7 +62,7 @@
 					<p>Codigo: ${l.codigo}</p>
 					<p>Cantidad: ${l.cantidad}</p>
 					<a href="<c:url value="/EditarArticulo?idArticulo=${l.idArticulos }"/>"><button
-	          				type="button" class="btn btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar Articulo</button>
+	          				type="button" class="btn btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Articulo</button>
 	          		</a>
 	          		
 	          		<!--  Prueba Boton Modal -->

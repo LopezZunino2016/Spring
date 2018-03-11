@@ -39,6 +39,7 @@
 			<beans:list>
 				<beans:value>es.altair.inventario.bean.Usuario</beans:value>
 				<beans:value>es.altair.inventario.bean.Articulo</beans:value>
+				<beans:value>es.altair.inventario.bean.Compra</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
@@ -53,6 +54,9 @@
 		<beans:property name="sessionFactory" ref="sessionFactory"/>
 	</beans:bean>
 	<beans:bean id="articuloDAO" class="es.altair.inventario.dao.ArticuloDAOImpl">
+		<beans:property name="sessionFactory" ref="sessionFactory"/>
+	</beans:bean>
+	<beans:bean id="compraDAO" class="es.altair.inventario.dao.CompraDAOImpl">
 		<beans:property name="sessionFactory" ref="sessionFactory"/>
 	</beans:bean>
 	
