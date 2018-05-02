@@ -86,7 +86,7 @@ public class UsuarioController {
 	@RequestMapping(value="/PrincipalNormal", method=RequestMethod.GET)
 	public ModelAndView principalUsuario(Model model,HttpSession sesion) {
 		model.addAttribute("listaArticulo",articuloDAO.listar());	
-
+		
 		return new ModelAndView("PrincipalNormal");
 
 	}
